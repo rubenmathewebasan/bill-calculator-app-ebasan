@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Bill Calculator - Home</title>
+    <!-- Importing a clean font (Inter) for the UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. RESET (Clears default browser spacing) --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* --- 2. LAYOUT SETUP --- */
+        html, body {
+            height: 100%; /* Ensures the page fills the full screen */
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column; /* Stacks Header on top of Main Body */
+        }
+
+        /* --- 3. HEADER (Top Pink Strip) --- */
+        .header {
+            background-color: #AD8383; /* Dusty Mauve color from image */
+            height: 15vh; /* Takes up 15% of the screen height */
+            min-height: 80px; /* Prevents it from getting too small */
+            display: flex;
+            align-items: center;
+            padding-left: 40px;
+            flex-shrink: 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Styling for the recycling/lightning icon */
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 15px;
+            stroke: black; /* Black outline like in the image */
+            stroke-width: 2;
+        }
+
+        /* --- 4. MAIN CONTAINER (Dark Purple Area) --- */
+        .main-container {
+            background-color: #351D36; /* Deep Purple background */
+            flex-grow: 1; /* Fills the rest of the screen height */
+            display: flex;
+            flex-direction: row; /* Arranges Sidebar (Left) and Content (Right) side-by-side */
+        }
+
+        /* --- 5. LEFT SIDEBAR --- */
+        .sidebar {
+            width: 25%; /* Sidebar takes 25% width */
+            min-width: 200px;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-title {
+            color: white;
+            font-family: 'Arial Black', 'Inter', sans-serif; /* Chunky bold font */
+            font-size: 2rem;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        .nav-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 30px; /* Vertical space between icons */
+        }
+
+        /* Icon Styling */
+        .icon svg {
+            width: 35px;
+            height: 35px;
+            fill: black; /* Icons are black silhouettes */
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .icon svg:hover {
+            opacity: 0.7;
+        }
+
+        /* --- 6. RIGHT CONTENT AREA (Buttons) --- */
+        .content-area {
+            flex-grow: 1; /* Takes the remaining 75% width */
+            display: flex;
+            justify-content: center; /* Horizontally centers the buttons */
+            align-items: center;     /* Vertically centers the buttons */
+        }
+
+        .buttons-wrapper {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically */
+            gap: 30px; /* Space between buttons */
+            width: 100%;
+            max-width: 350px; /* Limits button width */
+        }
+
+        .menu-btn {
+            background-color: #D9D9D9; /* Light Gray */
+            color: black;
+            border: none;
+            border-radius: 6px; /* Rounded corners */
+            height: 65px; /* Button height */
+            font-size: 1.1rem;
+            font-weight: 700; /* Bold text */
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Subtle shadow */
+            transition: transform 0.1s, background-color 0.2s;
+        }
+
+        .menu-btn:hover {
+            background-color: white; /* Brightens on hover */
+            transform: scale(1.02); /* Slight zoom effect */
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column; /* Stack vertical on mobile */
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                padding: 20px 30px;
+                flex-direction: row; /* Icons next to title on mobile */
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .sidebar-title {
+                margin-bottom: 0;
+                font-size: 1.5rem;
+            }
+
+            .nav-icons {
+                flex-direction: row;
+                gap: 20px;
+            }
+
+            .content-area {
+                padding: 40px 20px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo-container">
+            <!-- SVG Logo Icon -->
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/>
+                <path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/>
+                <path d="M14 5h-4.3c-1.313 0-2.036 1.34-1.325 2.455l.613.96"/>
+                <path d="M13 10l-3 6h4l-1 5"/>
+            </svg>
+            <span>Electric Bill Calculator</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        
+        <!-- Sidebar (Left) -->
+        <aside class="sidebar">
+            <h1 class="sidebar-title">home</h1>
+            
+            <nav class="nav-icons">
+                <!-- Calculator Icon -->
+                <div class="icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+                        <path d="M7 7h10v2H7zm0 4h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2zm-8 4h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/>
+                    </svg>
+                </div>
+
+                <!-- History Icon -->
+                <div class="icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                    </svg>
+                </div>
+
+                <!-- User Profile Icon -->
+                <div class="icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Buttons Area (Right/Center) -->
+        <main class="content-area">
+            <div class="buttons-wrapper">
+                <button class="menu-btn" onclick="window.location.href='profile_page.html'">Profile</button>
+                <button class="menu-btn" onclick="window.location.href='results_page.html'">History</button>
+                <button class="menu-btn" onclick="window.location.href='calculator_page.html'">Calculator</button>
+            </div>
+        </main>
+
+    </div>
+
+</body>
+</html>

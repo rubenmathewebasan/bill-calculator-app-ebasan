@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electric Bill Calculator - Profile</title>
+    <!-- Importing fonts to match the design -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Passion+One&display=swap"
+        rel="stylesheet"
+    />
+
+    <style>
+        /* --- 1. RESET --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* --- 2. LAYOUT SETUP --- */
+        html,
+        body {
+            height: 100%; /* Forces page to fill screen */
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars */
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            display: flex;
+            flex-direction: column; /* Stack Header on top of Main Body */
+        }
+
+        /* --- 3. HEADER (Pink Top Strip) --- */
+        .header {
+            background-color: #ad8383; /* Dusty Mauve */
+            height: 15vh; /* 15% of screen height */
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            padding-left: 40px;
+            flex-shrink: 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 15px;
+            stroke: black; /* Black outline */
+            stroke-width: 2;
+        }
+
+        /* --- 4. MAIN CONTAINER (Deep Purple) --- */
+        .main-container {
+            background-color: #351d36; /* Deep Purple */
+            flex-grow: 1; /* Fills remaining height */
+            display: flex;
+            flex-direction: row; /* Arranges Sidebar LEFT and Content RIGHT */
+        }
+
+        /* --- 5. LEFT SIDEBAR --- */
+        .sidebar {
+            width: 25%;
+            min-width: 220px;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-title {
+            color: white;
+            font-family: "Passion One", sans-serif; /* Chunky bold font */
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        .nav-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 30px; /* Space between icons */
+        }
+
+        /* Icon Styling */
+        .icon svg {
+            width: 35px;
+            height: 35px;
+            fill: black; /* Solid black icons */
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .icon svg:hover {
+            opacity: 0.7;
+        }
+
+        /* --- 6. CENTER CONTENT (Profile) --- */
+        .content-area {
+            flex-grow: 1; /* Takes remaining width */
+            display: flex;
+            justify-content: center; /* Horizontally Center */
+            align-items: center; /* Vertically Center */
+        }
+
+        .profile-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Circular Image Styling */
+        .profile-pic {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%; /* Makes the image a perfect circle */
+            object-fit: cover; /* Ensures image doesn't stretch */
+            margin-bottom: 30px;
+            background-color: #ccc; /* Placeholder color if image fails */
+        }
+
+        /* Name Styling */
+        .user-name {
+            color: white;
+            font-family: "Passion One", sans-serif; /* Chunky font to match image */
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 400; /* Font is naturally bold */
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column; /* Stack vertically on phones */
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                padding: 20px 30px;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .page-title {
+                margin-bottom: 0;
+                font-size: 2rem;
+            }
+
+            .nav-icons {
+                flex-direction: row;
+                gap: 20px;
+            }
+
+            .content-area {
+                padding: 40px 20px;
+                align-items: flex-start;
+                padding-top: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo-container">
+            <!-- Logo Icon -->
+            <svg
+                class="logo-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path
+                    d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"
+                />
+                <path
+                    d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"
+                />
+                <path
+                    d="M14 5h-4.3c-1.313 0-2.036 1.34-1.325 2.455l.613.96"
+                />
+                <path d="M13 10l-3 6h4l-1 5" />
+            </svg>
+            <span>Electric Bill Calculator</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar (Left) -->
+        <aside class="sidebar">
+            <h1 class="page-title">Profile</h1>
+
+            <nav class="nav-icons">
+                <!-- Home Icon -->
+                <div class="icon">
+                    <a href="user_dashboard.html">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+                            />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Calculator Icon -->
+                <div class="icon">
+                    <a href="calculator_page.html">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"
+                            />
+                            <path
+                                d="M7 7h10v2H7zm0 4h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2zm-8 4h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"
+                            />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- History Icon -->
+                <div class="icon">
+                    <a href="results_page.html">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                            />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Logout Icon -->
+                <div class="icon">
+                    <a href="#" onclick="handleLogout(); return false;">
+                        <svg viewBox="0 0 24 24">
+                            <!-- Door with arrow icon -->
+                            <path d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5v-2H5V5h5V3z" />
+                            <path d="M15 12l-4-4v3H3v2h8v3l4-4z" />
+                        </svg>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Content Area (Center) -->
+        <main class="content-area">
+            <div class="profile-card">
+                <!-- Profile picture (placeholder; will be updated with email-based avatar if available) -->
+                <img
+                    src="https://i.pravatar.cc/300?img=11"
+                    alt="Profile Picture"
+                    class="profile-pic"
+                />
+
+                <!-- Name (will be updated from Supabase user metadata/email) -->
+                <h2 class="user-name">USER NAME</h2>
+            </div>
+        </main>
+    </div>
+
+    <!-- Supabase + auth helpers -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Require authentication
+            const session = await initAuth();
+            if (!session) return;
+
+            const user = await getCurrentUser();
+            if (!user) return;
+
+            const nameEl = document.querySelector(".user-name");
+            const imgEl = document.querySelector(".profile-pic");
+
+            // Set name from metadata.full_name, or fallback to email
+            if (user.user_metadata && user.user_metadata.full_name) {
+                nameEl.textContent = user.user_metadata.full_name;
+            } else if (user.email) {
+                nameEl.textContent = user.email;
+            }
+
+            // Optional: generate avatar based on email for consistency
+            if (user.email && imgEl) {
+                imgEl.src =
+                    "https://i.pravatar.cc/300?u=" +
+                    encodeURIComponent(user.email);
+            }
+        });
+
+        async function handleLogout() {
+            const success = await signOut();
+            if (success) {
+                window.location.href = "login.html";
+            } else {
+                alert("Error logging out. Please try again.");
+            }
+        }
+    </script>
+</body>
+</html>

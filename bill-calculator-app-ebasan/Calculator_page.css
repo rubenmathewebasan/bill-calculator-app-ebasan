@@ -1,0 +1,52 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
+header {
+    background-color: #BA9090; /* Dusty Mauve */
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Main Content Styles */
+.main-content {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: #3B203B; /* Deep Purple */
+    color: white;
+    width: 250px;
+    padding: 20px;
+}
+
+.sidebar h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.sidebar-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    fill: white;
+    cursor: pointer;
+}

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Electric Bill Calculator</title>
+  <!-- Loading fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Passion+One&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* --- CSS STYLES --- */
+    /* 1. Reset defaults */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    /* 2. Body */
+    body {
+      font-family: "Inter", sans-serif;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    /* 3. Header */
+    header {
+      background-color: #ac8484;
+      height: 15vh;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      padding-left: 40px;
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .header-logo svg {
+      margin-right: 15px;
+      stroke: black;
+      width: 30px;
+      height: 30px;
+    }
+    /* 4. Main */
+    .main-content {
+      background-color: #331b33;
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+    }
+    /* Sidebar */
+    .sidebar {
+      width: 30%;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .sidebar h1 {
+      font-family: "Passion One", cursive, sans-serif;
+      color: white;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+    }
+    .sidebar-icons {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin-left: 10px;
+    }
+    .icon {
+      width: 40px;
+      height: 40px;
+      fill: black;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .icon:hover {
+      opacity: 0.7;
+    }
+    /* Form area */
+    .form-area {
+      width: 70%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-right: 40px;
+    }
+    .calculator-form {
+      width: 100%;
+      max-width: 450px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .input-group label {
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .input-group input {
+      width: 100%;
+      height: 55px;
+      background-color: #d9d9d9;
+      border-radius: 15px;
+      border: none;
+      padding: 0 20px;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+    .btn-calculate {
+      align-self: center;
+      background-color: #d9d9d9;
+      border: none;
+      padding: 12px 50px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .btn-calculate:hover {
+      background-color: white;
+    }
+
+    /* Result & history */
+    .result-output {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 450px;
+      color: white;
+      font-size: 0.9rem;
+    }
+    .result-output h3 {
+      margin: 15px 0 10px;
+    }
+    .result-output table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      color: #333;
+      font-size: 0.85rem;
+    }
+    .result-output th,
+    .result-output td {
+      border: 1px solid #ccc;
+      padding: 6px 8px;
+      text-align: left;
+    }
+    .result-output th {
+      background: #f2f2f2;
+    }
+
+    /* Mobile Fix */
+    @media (max-width: 768px) {
+      .main-content {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        padding: 20px;
+        justify-content: space-between;
+      }
+      .sidebar h1 {
+        margin: 0;
+        font-size: 1.8rem;
+      }
+      .sidebar-icons {
+        flex-direction: row;
+        margin: 0;
+      }
+      .form-area {
+        width: 100%;
+        padding: 40px 20px;
+      }
+      .result-output {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-logo">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"
+        />
+        <path
+          d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"
+        />
+        <path
+          d="M14 5h-4.3c-1.313 0-2.036 1.34-1.325 2.455l.613.96"
+        />
+        <path d="M13 10l-3 6h4l-1 5" />
+      </svg>
+      <span>Electric Bill Calculator</span>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="sidebar">
+      <h1>Calculator</h1>
+      <div class="sidebar-icons">
+        <a href="user_dashboard.html">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+          </svg>
+        </a>
+        <a href="results_page.html">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M3 3h18v18H3z" />
+          </svg>
+        </a>
+        <a href="profile_page.html">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 
+                 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="form-area">
+      <form class="calculator-form" onsubmit="event.preventDefault();">
+        <div class="input-group">
+          <label for="month">MONTH</label>
+          <input id="month" type="text" />
+        </div>
+        <div class="input-group">
+          <label for="power_consumption">POWER CONSUMPTION (kWh)</label>
+          <input id="power_consumption" type="number" step="0.01" />
+        </div>
+        <div class="input-group">
+          <label for="cost_per_kwh">COST PER KWH (₱)</label>
+          <input id="cost_per_kwh" type="number" step="0.01" />
+        </div>
+        <button type="button" class="btn-calculate" id="btn_calculate">
+          CALCULATE
+        </button>
+      </form>
+
+      <div id="result" class="result-output"></div>
+    </div>
+  </div>
+
+  <!-- Supabase + auth -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Ensure user is authenticated on load
+      await initAuth();
+
+      document
+        .getElementById("btn_calculate")
+        .addEventListener("click", handleCalculate);
+    });
+
+    async function handleCalculate() {
+      const month = document.getElementById("month");
+      const power_consumption = document.getElementById("power_consumption");
+      const cost_per_kwh = document.getElementById("cost_per_kwh");
+      const resultDiv = document.getElementById("result");
+
+      // Validate inputs
+      if (!month.value || !power_consumption.value || !cost_per_kwh.value) {
+        alert("Please fill in all fields!");
+        return;
+      }
+
+      // Get current user
+      const user = await getCurrentUser();
+      if (!user) {
+        alert("You must be logged in to save calculations!");
+        window.location.href = "login.html";
+        return;
+      }
+
+      // Calculate result
+      const result_value =
+        parseFloat(cost_per_kwh.value) * parseFloat(power_consumption.value);
+
+      // Display result message
+      resultDiv.innerHTML =
+        "Your electric bill is: ₱ " + result_value.toFixed(2);
+
+      // Save to Supabase
+      try {
+        const { data, error } = await supabaseClient
+          .from("calculations")
+          .insert([
+            {
+              user_id: user.id,
+              month: month.value,
+              power_consumption: parseFloat(power_consumption.value),
+              cost_per_kwh: parseFloat(cost_per_kwh.value),
+              result: result_value,
+            },
+          ])
+          .select();
+
+        if (error) {
+          console.error("Error saving calculation:", error);
+          alert(
+            "Calculation saved locally, but failed to save to database: " +
+              error.message
+          );
+        } else {
+          console.log("Calculation saved:", data);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Error saving calculation: " + error.message);
+      }
+
+      // Get or create the results table
+      let table = document.getElementById("myTable");
+
+      if (!table) {
+        resultDiv.innerHTML += `
+          <h3>Calculation History</h3>
+          <table id="myTable">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Power Consumption (kWh)</th>
+                <th>Cost Per kWh (₱)</th>
+                <th>Result (₱)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        `;
+        table = document.getElementById("myTable");
+      }
+
+      // Insert new row at the top (after header)
+      const row = table.insertRow(1);
+      const cellMonth = row.insertCell(0);
+      const cellPowerConsumption = row.insertCell(1);
+      const cellCostPerKwh = row.insertCell(2);
+      const cellResult = row.insertCell(3);
+
+      cellMonth.innerHTML = month.value;
+      cellPowerConsumption.innerHTML = parseFloat(
+        power_consumption.value
+      ).toFixed(2);
+      cellCostPerKwh.innerHTML =
+        "₱ " + parseFloat(cost_per_kwh.value).toFixed(2);
+      cellResult.innerHTML = "₱ " + result_value.toFixed(2);
+
+      // Clear form inputs
+      month.value = "";
+      power_consumption.value = "";
+      cost_per_kwh.value = "";
+    }
+
+    // Optional: if you want a logout handler somewhere:
+    async function handleLogout() {
+      const success = await signOut();
+      if (success) {
+        window.location.href = "login.html";
+      } else {
+        alert("Error logging out. Please try again.");
+      }
+    }
+  </script>
+</body>
+</html>

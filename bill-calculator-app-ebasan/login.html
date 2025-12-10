@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electric Bill Calculator - Sign In</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+        rel="stylesheet"
+    />
+
+    <style>
+        /* 1. RESET */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .header {
+            background-color: #AD8383;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            padding-left: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .logo svg {
+            width: 30px;
+            height: 30px;
+            margin-right: 15px;
+            stroke: black;
+            stroke-width: 2;
+        }
+
+        /* MAIN */
+        .main {
+            background-color: #351D36;
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .signin-container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .signin-title {
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        input {
+            width: 100%;
+            height: 55px;
+            padding: 0 15px;
+            border: none;
+            background: white;
+            font-size: 16px;
+        }
+
+        input::placeholder {
+            color: #333;
+            font-size: 14px;
+        }
+
+        .forgot-password {
+            align-self: flex-end;
+            color: #BC6E6E;
+            font-size: 14px;
+            margin-top: 8px;
+            text-decoration: none;
+        }
+
+        .btn-signin {
+            background: white;
+            width: 150px;
+            height: 45px;
+            border: none;
+            font-weight: 700;
+            font-size: 16px;
+            margin-top: 50px;
+            cursor: pointer;
+        }
+
+        .btn-signin:hover { opacity: 0.9; }
+
+        .footer-links {
+            margin-top: 40px;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .footer-links a {
+            margin-left: 20px;
+            color: #BC6E6E;
+            text-decoration: none;
+        }
+
+        /* ERROR MESSAGE */
+        .error-message {
+            color: #ff6b6b;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/>
+                <path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/>
+                <path d="M14 5h-4.3c-1.313 0-2.036 1.34-1.325 2.455l.613.96"/>
+                <path d="M13 10l-3 6h4l-1 5"/>
+            </svg>
+            <span>Electric Bill Calculator</span>
+        </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+        <div class="signin-container">
+            <div class="signin-title">SIGN IN</div>
+
+            <form
+                onsubmit="event.preventDefault(); handleLogin();"
+                style="width: 100%; display: flex; flex-direction: column; align-items: center;"
+            >
+                <div class="form-group">
+                    <input id="email" type="text" placeholder="email" />
+                    <input id="password" type="password" placeholder="password" />
+                </div>
+
+                <a href="#" class="forgot-password">Forgot your password?</a>
+
+                <button type="submit" class="btn-signin" id="loginBtn">Sign In</button>
+
+                <div class="error-message" id="errorMsg">Invalid email or password</div>
+
+                <div class="footer-links">
+                    <span>Don't have an account?</span>
+                    <a href="register.html">Sign up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Supabase CDN + config -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+
+    <script>
+        // Redirect if already logged in
+        document.addEventListener("DOMContentLoaded", async () => {
+            await redirectIfAuthenticated();
+        });
+
+        async function handleLogin() {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const errorMsg = document.getElementById("errorMsg");
+
+            if (!email || !password) {
+                errorMsg.textContent = "Please fill in all fields!";
+                errorMsg.style.display = "block";
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = document.getElementById("loginBtn");
+            const originalValue = submitBtn.textContent;
+            submitBtn.textContent = "Logging in...";
+            submitBtn.disabled = true;
+            errorMsg.style.display = "none";
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password,
+                });
+
+                if (error) {
+                    errorMsg.textContent = "Login failed: " + error.message;
+                    errorMsg.style.display = "block";
+                    submitBtn.textContent = originalValue;
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                // Success - redirect to dashboard
+                window.location.href = "user_dashboard.html";
+            } catch (error) {
+                errorMsg.textContent = "An error occurred: " + error.message;
+                errorMsg.style.display = "block";
+                submitBtn.textContent = originalValue;
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Redirect if authenticated
+        async function redirectIfAuthenticated() {
+            const session = await checkAuth();
+            if (session) {
+                window.location.href = "user_dashboard.html";
+            }
+        }
+    </script>
+</body>
+</html>

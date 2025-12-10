@@ -1,0 +1,142 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Hero Section (Top) --- */
+.hero-section {
+  background-color: #BA9090; /* Dusty Mauve */
+  padding: 20px 40px 50px 40px;
+  flex: 0.8; /* Takes up less space than the bottom part */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Logo Styling */
+.nav-bar {
+  margin-bottom: 30px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.logo svg {
+  margin-right: 10px;
+  stroke: black; /* Icon is black outline */
+}
+
+/* Hero Text Styling */
+.hero-content {
+  max-width: 800px;
+}
+
+.hero-content h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.hero-content p {
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: 0.9;
+  max-width: 600px;
+  line-height: 1.4;
+}
+
+/* --- Info Section (Bottom) --- */
+.info-section {
+  background-color: #3B203B; /* Deep Purple */
+  padding: 50px 40px;
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-section h2 {
+  font-size: 1.6rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* The Box containing the features */
+.info-card {
+  background-color: #BF9696; /* Matches the top hero color mostly */
+  width: 100%;
+  max-width: 900px;
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+/* Individual Feature Columns */
+.feature-column {
+  flex: 1;
+}
+
+.feature-column h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.feature-column p {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+/* Button/Action Area */
+.action-area {
+  margin-top: 50px;
+}
+
+.btn-open {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.2s ease;
+}
+
+.btn-open:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+/* --- Responsive Design for Mobile --- */
+@media (max-width: 768px) {
+  .info-card {
+      flex-direction: column;
+      padding: 30px;
+  }
+
+  .hero-content h1 {
+      font-size: 1.5rem;
+  }
+  
+  .info-section h2 {
+      font-size: 1.3rem;
+  }
+}

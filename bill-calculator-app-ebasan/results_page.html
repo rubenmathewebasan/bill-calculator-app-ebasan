@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Bill Calculator - History</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Passion+One&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html, body { height:100%; width:100%; overflow:hidden; }
+        body { font-family:'Inter', sans-serif; display:flex; flex-direction:column; }
+
+        .header {
+            background-color:#AD8383;
+            height:15vh; min-height:90px;
+            display:flex; align-items:center; padding-left:40px;
+        }
+
+        .logo-container { display:flex; align-items:center; color:white; font-weight:700; font-size:1.2rem; }
+        .logo-icon { width:32px; height:32px; margin-right:15px; stroke:black; stroke-width:2; }
+
+        .main-container {
+            background-color:#351D36; flex-grow:1; display:flex; flex-direction:row;
+        }
+
+        .sidebar {
+            width:25%; min-width:220px; padding:60px 40px; display:flex; flex-direction:column;
+        }
+
+        .page-title { color:white; font-family:'Passion One', sans-serif; font-size:2.5rem; margin-bottom:40px; letter-spacing:1px; }
+
+        .nav-icons { display:flex; flex-direction:column; gap:30px; }
+        .icon svg { width:35px; height:35px; fill:black; cursor:pointer; transition:opacity 0.2s; }
+        .icon svg:hover { opacity:0.7; }
+
+        .content-area { flex-grow:1; display:flex; justify-content:center; align-items:center; }
+        .table-container {
+            background-color:#AD8383; width:90%; max-width:600px; height:70%; max-height:600px;
+            border-radius:20px; padding:30px; display:flex; justify-content:center; overflow-y:auto;
+        }
+
+        table { width:100%; border-collapse:collapse; font-size:0.8rem; color:black; font-weight:500; }
+        th, td { border:1px solid #8e6b6b; padding:10px; text-align:left; vertical-align:top; }
+        th { font-weight:700; padding-bottom:15px; }
+        th:nth-child(1){width:20%;} th:nth-child(2){width:30%;} th:nth-child(3){width:30%;} th:nth-child(4){width:20%;}
+
+        @media (max-width:768px) {
+            .main-container { flex-direction:column; }
+            .sidebar { width:100%; height:auto; padding:20px 30px; flex-direction:row; align-items:center; justify-content:space-between; }
+            .page-title { margin-bottom:0; font-size:2rem; }
+            .nav-icons { flex-direction:row; gap:20px; }
+            .content-area { padding:20px; align-items:flex-start; }
+            .table-container { height:auto; padding:15px; }
+            th, td { font-size:0.7rem; padding:5px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="logo-container">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/>
+            <path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/>
+            <path d="M14 5h-4.3c-1.313 0-2.036 1.34-1.325 2.455l.613.96"/>
+            <path d="M13 10l-3 6h4l-1 5"/>
+        </svg>
+        <span>Electric Bill Calculator</span>
+    </div>
+</header>
+
+<div class="main-container">
+    <aside class="sidebar">
+        <h1 class="page-title">History</h1>
+        <nav class="nav-icons">
+            <div class="icon">
+                <a href="user_dashboard.html">
+                    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                </a>
+            </div>
+            <div class="icon">
+                <a href="calculator_page.html">
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/><path d="M7 7h10v2H7zm0 4h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2zm-8 4h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>
+                </a>
+            </div>
+            <div class="icon">
+                <a href="profile_page.html">
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="content-area">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Power<br>Consumption</th>
+                        <th>Cost per<br>KWH</th>
+                        <th>BILL</th>
+                    </tr>
+                </thead>
+                <tbody id="results-table-body">
+                    <!-- Dynamic rows will be injected here by JS -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<!-- Supabase + auth -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/auth.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        // Ensure user is authenticated
+        const session = await initAuth();
+        if (!session) return;
+
+        const user = await getCurrentUser();
+        if (!user) return;
+
+        await loadHistory(user.id);
+    });
+
+    async function loadHistory(userId) {
+        const tbody = document.getElementById("results-table-body");
+        tbody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+
+        try {
+            const { data, error } = await supabaseClient
+                .from("calculations")
+                .select("*")
+                .eq("user_id", userId)
+                .order("created_at", { ascending: false }); // requires created_at column in table
+
+            if (error) {
+                console.error("Error loading history:", error);
+                tbody.innerHTML = '<tr><td colspan="4">Error loading history.</td></tr>';
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4">No calculations found yet.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = "";
+
+            data.forEach((calc) => {
+                const tr = document.createElement("tr");
+
+                // Use month if you stored it; fallback to created_at date
+                const dateText = calc.month
+                    ? calc.month
+                    : calc.created_at
+                    ? new Date(calc.created_at).toLocaleDateString()
+                    : "";
+
+                tr.innerHTML = `
+                    <td>${dateText}</td>
+                    <td>${Number(calc.power_consumption).toFixed(2)} kWh</td>
+                    <td>₱ ${Number(calc.cost_per_kwh).toFixed(2)}</td>
+                    <td>₱ ${Number(calc.result).toFixed(2)}</td>
+                `;
+
+                tbody.appendChild(tr);
+            });
+        } catch (e) {
+            console.error("Unexpected error:", e);
+            tbody.innerHTML =
+                '<tr><td colspan="4">Unexpected error loading history.</td></tr>';
+        }
+    }
+</script>
+</body>
+</html>

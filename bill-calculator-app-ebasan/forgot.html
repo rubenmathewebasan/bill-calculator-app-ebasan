@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Bill Calculator</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Header Section */
+        header {
+            background-color: #a88282; /* Dusty Rose/Mauve color */
+            height: 120px; /* Approximate height based on image */
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+            color: white;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        /* SVG Logo Styling to match the recycling/bolt icon */
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            fill: none;
+            stroke: black;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Main Content Section */
+        main {
+            background-color: #3e1e46; /* Dark Purple/Eggplant color */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        h2 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            width: 100%;
+        }
+
+        input {
+            padding: 12px 15px;
+            font-size: 14px;
+            border: none;
+            outline: none;
+            background-color: white;
+            color: #333;
+        }
+
+        input::placeholder {
+            color: #333;
+        }
+
+        /* Specific widths based on the visual design */
+        .input-wide {
+            width: 350px;
+        }
+
+        .input-narrow {
+            width: 230px; /* The 'code' input is visually shorter */
+        }
+
+        button {
+            background-color: white;
+            color: black;
+            border: none;
+            padding: 12px 25px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+            /* Box shadow to add slight depth if needed, though flat in image */
+        }
+
+        button:hover {
+            background-color: #f0f0f0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <!-- Custom SVG to mimic the Recycling Lightning Bolt logo -->
+            <svg class="logo-icon" viewBox="0 0 24 24">
+                <!-- Approximate recycling triangle shape with lightning -->
+                <path d="M7 7l-2 4h4" /> <!-- Decorative bits -->
+                <path d="M12 3l-5 9h10l-5 9" /> <!-- Lightning bolt center -->
+                <path d="M3 11c0-3 2.5-5 5-5h2" /> 
+                <path d="M21 13c0 3-2.5 5-5 5h-2" />
+                <path d="M7 21l-2-3" />
+                <path d="M17 3l2 3" />
+            </svg>
+            <span class="header-title">Electric Bill Calculator</span>
+        </div>
+    </header>
+
+    <main>
+        <h2>Find your Account</h2>
+
+        <form action="#">
+            <input type="email" class="input-wide" placeholder="Enter Your email" required>
+            
+            <input type="text" class="input-narrow" placeholder="Enter the code" required>
+            
+            <input type="password" class="input-wide" placeholder="password" required>
+            
+            <input type="password" class="input-wide" placeholder="Confirm your password" required>
+
+           
+            <button class="submit  " onclick="window.location.href='login.html'">Change Password</button>
+        </form>
+    </main>
+
+</body>
+</html>
